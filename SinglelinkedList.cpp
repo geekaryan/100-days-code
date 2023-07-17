@@ -120,6 +120,36 @@ void deleteNode(int position, Node *&head)
     }
 }
 
+// For detecting loop in singly linked lists
+bool detectLoop(Node *head)
+{
+
+    if (head == NULL)
+    {
+        return false;
+    }
+
+    map<Node *, bool> visited;
+
+    Node *temp = head;
+
+    while (temp != NULL)
+    {
+
+        // cycle is present
+        if (visited[temp] == true)
+        {
+            cout << "Present on element " << temp->data << endl;
+            return 1;
+        }
+
+        visited[temp] = true;
+        temp = temp->next;
+    }
+
+    return false;
+}
+
 int main()
 {
 
@@ -142,6 +172,19 @@ int main()
 
     deleteNode(1, head);
     print(head);
+
+    // manually used for making loops
+    tail->next = head->next;
+
+    // detecting whether the loop is present or not
+    if (detectLoop(head))
+    {
+        cout << "Cycle is present" << endl;
+    }
+    else
+    {
+        cout << "Cycle is not present" << endl;
+    }
 
     return 0;
 }
